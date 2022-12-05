@@ -131,7 +131,7 @@ public class EspecialidadeDaoJDBC implements EspecialidadeDao {
 
         try {
             st = conn.prepareStatement(
-                "SELECT * FROM laboratorio;"
+                "SELECT * FROM especialidade;"
             );
 
             rs = st.executeQuery();

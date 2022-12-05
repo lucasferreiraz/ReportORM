@@ -103,7 +103,7 @@ public class PacienteDaoJDBC implements PacienteDao {
 
         try {
             st = conn.prepareStatement(
-                "SELECT id, * FROM laboratorio WHERE id = ?"
+                "SELECT id, * FROM paciente WHERE id = ?"
             );
 
             st.setInt(1, id);

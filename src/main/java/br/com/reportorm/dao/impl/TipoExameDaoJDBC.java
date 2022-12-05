@@ -102,7 +102,7 @@ public class TipoExameDaoJDBC implements TipoExameDao {
 
         try {
             st = conn.prepareStatement(
-                "SELECT id, * FROM especialidade WHERE id = ?"
+                "SELECT id, * FROM tipo_exame WHERE id = ?"
             );
 
             st.setInt(1, id);
@@ -131,7 +131,7 @@ public class TipoExameDaoJDBC implements TipoExameDao {
 
         try {
             st = conn.prepareStatement(
-                "SELECT * FROM laboratorio;"
+                "SELECT * FROM tipo_exame;"
             );
 
             rs = st.executeQuery();
