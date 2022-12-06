@@ -73,7 +73,7 @@ public class ContatoDaoJDBC implements ContatoDao {
 			st.setString(1, obj.getTelefone());
 			st.setInt(2, obj.getLaboratorio().getId());
 
-			st.setInt(6, obj.getId());
+			st.setInt(3, obj.getId());
 			
 			st.executeUpdate();
 		}
@@ -130,26 +130,6 @@ public class ContatoDaoJDBC implements ContatoDao {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
-	}
-
-	private Contato instantiateContato(ResultSet rs, Laboratorio lab) throws SQLException {
-		Contato contato = new Contato();
-		contato.setId(rs.getInt("id"));
-		contato.setTelefone(rs.getString("telefone"));
-		contato.setLaboratorio(lab);
-		return contato;
-	}
-
-	private Laboratorio instantiateLaboratorio(ResultSet rs) throws SQLException {
-		Laboratorio laboratorio = new Laboratorio();
-		laboratorio.setId(rs.getInt("laboratorio_id"));
-		laboratorio.setDescricao(rs.getString("descricao"));
-        laboratorio.setCNES(rs.getString("cnes"));
-        laboratorio.setCNPJ(rs.getString("cnpj"));
-        laboratorio.setCRBM(rs.getString("crbm"));
-        laboratorio.setNome_fantasia(rs.getString("nome_fantasia"));
-
-		return laboratorio;
 	}
 
 	@Override
@@ -232,4 +212,25 @@ public class ContatoDaoJDBC implements ContatoDao {
 			DB.closeResultSet(rs);
 		}
 	}
+
+	private Contato instantiateContato(ResultSet rs, Laboratorio lab) throws SQLException {
+		Contato contato = new Contato();
+		contato.setId(rs.getInt("id"));
+		contato.setTelefone(rs.getString("telefone"));
+		contato.setLaboratorio(lab);
+		return contato;
+	}
+
+	private Laboratorio instantiateLaboratorio(ResultSet rs) throws SQLException {
+		Laboratorio laboratorio = new Laboratorio();
+		laboratorio.setId(rs.getInt("laboratorio_id"));
+		laboratorio.setDescricao(rs.getString("descricao"));
+        laboratorio.setCNES(rs.getString("cnes"));
+        laboratorio.setCNPJ(rs.getString("cnpj"));
+        laboratorio.setCRBM(rs.getString("crbm"));
+        laboratorio.setNome_fantasia(rs.getString("nome_fantasia"));
+
+		return laboratorio;
+	}
+
 }
