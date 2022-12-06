@@ -3,6 +3,7 @@ package br.com.reportorm.dao;
 import java.util.List;
 
 import br.com.reportorm.entities.Contato;
+import br.com.reportorm.entities.Laboratorio;
 
 public interface ContatoDao {
     
@@ -16,5 +17,5 @@ public interface ContatoDao {
 
 	List<Contato> findAll();
 
-	List<Contato> findByDepartment(Contato contato);
+	List<Contato> findByLaboratorio(Laboratorio laboratorio);
 }

@@ -14,6 +14,7 @@ import br.com.reportorm.dao.ContatoDao;
 import br.com.reportorm.database.DB;
 import br.com.reportorm.database.DbException;
 import br.com.reportorm.entities.Contato;
+import br.com.reportorm.entities.Laboratorio;
 
 public class ContatoDaoJDBC implements ContatoDao {
     
@@ -108,17 +109,17 @@ public class ContatoDaoJDBC implements ContatoDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT seller.*,department.Name as DepName "
-					+ "FROM seller INNER JOIN department "
-					+ "ON seller.DepartmentId = department.Id "
-					+ "WHERE seller.Id = ?");
+					"SELECT contato.*, laboratorio.* "
+					+ "FROM contato INNER JOIN laboratorio "
+					+ "ON contato.laboratorio_id = laboratorio.id "
+					+ "WHERE contato.id = ?");
 			
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Department dep = instantiateDepartment(rs);
-				Seller obj = instantiateSeller(rs, dep);
-				return obj;
+				Laboratorio laboratorio = instantiateLaboratorio(rs);
+				Contato contato = instantiateContato(rs, laboratorio);
+				return contato;
 			}
 			return null;
 		}
@@ -131,53 +132,55 @@ public class ContatoDaoJDBC implements ContatoDao {
 		}
 	}
 
-	private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
-		Seller obj = new Seller();
-		obj.setId(rs.getInt("Id"));
-		obj.setName(rs.getString("Name"));
-		obj.setEmail(rs.getString("Email"));
-		obj.setBaseSalary(rs.getDouble("BaseSalary"));
-		obj.setBirthDate(rs.getDate("BirthDate"));
-		obj.setDepartment(dep);
-		return obj;
+	private Contato instantiateContato(ResultSet rs, Laboratorio lab) throws SQLException {
+		Contato contato = new Contato();
+		contato.setId(rs.getInt("id"));
+		contato.setTelefone(rs.getString("telefone"));
+		contato.setLaboratorio(lab);
+		return contato;
 	}
 
-	private Department instantiateDepartment(ResultSet rs) throws SQLException {
-		Department dep = new Department();
-		dep.setId(rs.getInt("DepartmentId"));
-		dep.setName(rs.getString("DepName"));
-		return dep;
+	private Laboratorio instantiateLaboratorio(ResultSet rs) throws SQLException {
+		Laboratorio laboratorio = new Laboratorio();
+		laboratorio.setId(rs.getInt("laboratorio_id"));
+		laboratorio.setDescricao(rs.getString("descricao"));
+        laboratorio.setCNES(rs.getString("cnes"));
+        laboratorio.setCNPJ(rs.getString("cnpj"));
+        laboratorio.setCRBM(rs.getString("crbm"));
+        laboratorio.setNome_fantasia(rs.getString("nome_fantasia"));
+
+		return laboratorio;
 	}
 
 	@Override
-	public List<Seller> findAll() {
+	public List<Contato> findAll() {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT seller.*,department.Name as DepName "
-					+ "FROM seller INNER JOIN department "
-					+ "ON seller.DepartmentId = department.Id "
-					+ "ORDER BY Name");
+					"SELECT contato.*,laboratorio.* "
+					+ "FROM contato INNER JOIN laboratorio "
+					+ "ON contato.laboratorio_id = laboratorio.id "
+					+ "ORDER BY descricao");
 			
 			rs = st.executeQuery();
 			
-			List<Seller> list = new ArrayList<>();
-			Map<Integer, Department> map = new HashMap<>();
+			List<Contato> contatoList = new ArrayList<>();
+			Map<Integer, Laboratorio> map = new HashMap<>();
 			
 			while (rs.next()) {
 				
-				Department dep = map.get(rs.getInt("DepartmentId"));
+				Laboratorio lab = map.get(rs.getInt("laboratorio_id"));
 				
-				if (dep == null) {
-					dep = instantiateDepartment(rs);
-					map.put(rs.getInt("DepartmentId"), dep);
+				if (lab == null) {
+					lab = instantiateLaboratorio(rs);
+					map.put(rs.getInt("laboratorio_id"), lab);
 				}
 				
-				Seller obj = instantiateSeller(rs, dep);
-				list.add(obj);
+				Contato obj = instantiateContato(rs, lab);
+				contatoList.add(obj);
 			}
-			return list;
+			return contatoList;
 		}
 		catch (SQLException e) {
 			throw new DbException(e.getMessage());
@@ -189,37 +192,37 @@ public class ContatoDaoJDBC implements ContatoDao {
 	}
 
 	@Override
-	public List<Seller> findByDepartment(Department department) {
+	public List<Contato> findByLaboratorio(Laboratorio laboratorio) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT seller.*,department.Name as DepName "
-					+ "FROM seller INNER JOIN department "
-					+ "ON seller.DepartmentId = department.Id "
-					+ "WHERE DepartmentId = ? "
-					+ "ORDER BY Name");
+					"SELECT contato.*,laboratorio.* "
+					+ "FROM contato INNER JOIN laboratorio "
+					+ "ON contato.laboratorio_id = laboratorio.id "
+					+ "WHERE contato.laboratorio_id = ? "
+					+ "ORDER BY descricao");
 			
-			st.setInt(1, department.getId());
+			st.setInt(1, laboratorio.getId());
 			
 			rs = st.executeQuery();
 			
-			List<Seller> list = new ArrayList<>();
-			Map<Integer, Department> map = new HashMap<>();
+			List<Contato> contatoList = new ArrayList<>();
+			Map<Integer, Laboratorio> map = new HashMap<>();
 			
 			while (rs.next()) {
 				
-				Department dep = map.get(rs.getInt("DepartmentId"));
+				Laboratorio lab = map.get(rs.getInt("laboratorio_id"));
 				
-				if (dep == null) {
-					dep = instantiateDepartment(rs);
-					map.put(rs.getInt("DepartmentId"), dep);
+				if (lab == null) {
+					lab = instantiateLaboratorio(rs);
+					map.put(rs.getInt("laboratorio_id"), lab);
 				}
 				
-				Seller obj = instantiateSeller(rs, dep);
-				list.add(obj);
+				Contato obj = instantiateContato(rs, lab);
+				contatoList.add(obj);
 			}
-			return list;
+			return contatoList;
 		}
 		catch (SQLException e) {
 			throw new DbException(e.getMessage());
