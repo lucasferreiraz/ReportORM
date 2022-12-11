@@ -1,6 +1,7 @@
 package br.com.reportorm.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,34 +9,34 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.reportorm.dao.ExameDao;
+import br.com.reportorm.dao.ResultadoExameDao;
 import br.com.reportorm.database.DB;
 import br.com.reportorm.database.DbException;
-import br.com.reportorm.entities.Exame;
+import br.com.reportorm.entities.ResultadoExame;
 
-public class ExameDaoJDBC implements ExameDao {
+public class ResultadoExameDaoJDBC implements ResultadoExameDao {
     
     private Connection conn;
 	
-	public ExameDaoJDBC(Connection conn) {
+	public ResultadoExameDaoJDBC(Connection conn) {
 		this.conn = conn;
 	}
 	
 	@Override
-	public void insert(Exame obj) {
+	public void insert(ResultadoExame obj) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"INSERT INTO exame "
-					+ "(tipo_exame_id,material_exame_id,descricao,metodo) "
+					"INSERT INTO resultado_exame "
+					+ "(dt_exame,valor,composicao_id,laudo_id) "
 					+ "VALUES "
 					+ "(?,?,?,?);",
 					Statement.RETURN_GENERATED_KEYS);
 			
-				st.setInt(1, obj.getTipoExameId());
-				st.setInt(2, obj.getMaterialExameId());
-				st.setString(3, obj.getDescricao());
-				st.setString(4, obj.getMetodo());
+			st.setDate(1, new Date(obj.getDt_exame().getTime()));
+			st.setString(2, obj.getValor());
+			st.setInt(3, obj.getComposicaoId());
+			st.setInt(4, obj.getLaudoId());
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -60,18 +61,18 @@ public class ExameDaoJDBC implements ExameDao {
 	}
 
 	@Override
-	public void update(Exame obj) {
+	public void update(ResultadoExame obj) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"UPDATE exame "
-					+ "SET tipo_exame_id = ?,material_exame_id = ?,descricao = ?,metodo = ? "
+					"UPDATE resultado_exame "
+					+ "SET dt_exame = ?,valor = ?,composicao_id = ?,laudo_id = ? "
 					+ "WHERE id = ?;");
 			
-			st.setInt(1, obj.getTipoExameId());
-			st.setInt(1, obj.getMaterialExameId());
-			st.setString(3, obj.getDescricao());
-			st.setString(4, obj.getMetodo());
+			st.setDate(1, new Date(obj.getDt_exame().getTime()));
+			st.setString(2, obj.getValor());
+			st.setInt(3, obj.getComposicaoId());
+			st.setInt(4, obj.getLaudoId());
 
 			st.setInt(5, obj.getId());
 			
@@ -89,7 +90,7 @@ public class ExameDaoJDBC implements ExameDao {
 	public void deleteById(Integer id) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("DELETE FROM exame WHERE Id = ?");
+			st = conn.prepareStatement("DELETE FROM resultado_exame WHERE Id = ?");
 			
 			st.setInt(1, id);
 			
@@ -104,18 +105,18 @@ public class ExameDaoJDBC implements ExameDao {
 	}
 
 	@Override
-	public Exame findById(Integer id) {
+	public ResultadoExame findById(Integer id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-				"SELECT id, * FROM exame WHERE id = ?");
+				"SELECT id, * FROM resultado_exame WHERE id = ?");
 			
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Exame exame = instantiateExame(rs);
-				return exame;
+				ResultadoExame resultadoExame = instantiateResultadoExame(rs);
+				return resultadoExame;
 			}
 			return null;
 		}
@@ -129,25 +130,25 @@ public class ExameDaoJDBC implements ExameDao {
 	}
 
 	@Override
-    public List<Exame> findAll() {
+    public List<ResultadoExame> findAll() {
         PreparedStatement st = null;
         ResultSet rs = null;
 
-        List<Exame> exameList = new ArrayList<>();
+        List<ResultadoExame> resultadoExameList = new ArrayList<>();
 
         try {
             st = conn.prepareStatement(
-                "SELECT * FROM exame;"
+                "SELECT * FROM resultado_exame;"
             );
 
             rs = st.executeQuery();
 
             while(rs.next()){
-                Exame exame = instantiateExame(rs);
-                exameList.add(exame);
+                ResultadoExame resultadoExame = instantiateResultadoExame(rs);
+                resultadoExameList.add(resultadoExame);
             }
 
-            return exameList;
+            return resultadoExameList;
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
@@ -156,15 +157,15 @@ public class ExameDaoJDBC implements ExameDao {
         }
     }
 
-	private Exame instantiateExame(ResultSet rs) throws SQLException {
-        Exame exame = new Exame();
-        exame.setId(rs.getInt("id"));
-        exame.setTipoExameId(rs.getInt("tipo_exame_id"));
-		exame.setDescricao(rs.getString("descricao"));
-		exame.setMaterialExameId(rs.getInt("material_exame_id"));
-		exame.setMetodo(rs.getString("metodo"));
+	private ResultadoExame instantiateResultadoExame(ResultSet rs) throws SQLException {
+        ResultadoExame resultadoExame = new ResultadoExame();
+        resultadoExame.setId(rs.getInt("id"));
+        resultadoExame.setDt_exame(rs.getDate("dt_exame"));
+		resultadoExame.setValor(rs.getString("valor"));
+		resultadoExame.setComposicaoId(rs.getInt("composicao_id"));
+		resultadoExame.setLaudoId(rs.getInt("laudo_id"));
 
-        return exame;
+        return resultadoExame;
     }
 
 }
