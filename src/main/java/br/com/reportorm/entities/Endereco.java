@@ -26,7 +26,7 @@ public class Endereco implements Serializable {
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
-        CEP = cEP;
+        this.CEP = cEP;
         this.cidade = cidade;
         this.laboratorioId = laboratorioId;
     }
@@ -76,7 +76,7 @@ public class Endereco implements Serializable {
     }
 
     public void setCEP(String cEP) {
-        CEP = cEP;
+        this.CEP = cEP;
     }
 
     public String getCidade() {
