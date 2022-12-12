@@ -27,13 +27,14 @@ public class ResponsavelTecnicoDaoJDBC implements ResponsavelTecnicoDao {
        
        try {
             st = conn.prepareStatement(
-                "INSERT INTO responsavel_tecnico (nome,conselho,formacao,sigla_formacao_id) VALUES (?,?,?,?);",
+                "INSERT INTO responsavel_tecnico (nome,conselho,formacao,sigla_formacao,sigla_formacao_id) VALUES (?,?,?,?,?);",
             Statement.RETURN_GENERATED_KEYS);
 
             st.setString(1, obj.getNome());
             st.setString(2, obj.getConselho());
             st.setString(3, obj.getFormacao());
-            st.setInt(4, obj.getSiglaFormacaoId());
+            st.setString(4, "null");
+            st.setInt(5, obj.getSiglaFormacaoId());
 
             int rowsAffected = st.executeUpdate();
 
