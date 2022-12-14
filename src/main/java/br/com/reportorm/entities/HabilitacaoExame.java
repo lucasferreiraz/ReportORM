@@ -10,6 +10,8 @@ public class HabilitacaoExame implements Serializable {
     private String observacao;
     private Long custo;
 
+    private Laboratorio laboratorio;
+    private TipoExame tipoExame;
     private Integer laboratorioId;
     private Integer tipoExameId;
     
@@ -22,6 +24,14 @@ public class HabilitacaoExame implements Serializable {
         this.custo = custo;
         this.laboratorioId = laboratorioId;
         this.tipoExameId = tipoExameId;
+    }
+
+    public HabilitacaoExame(Integer id, String observacao, Long custo, Laboratorio laboratorio, TipoExame tipoExame) {
+        this.id = id;
+        this.observacao = observacao;
+        this.custo = custo;
+        this.laboratorio = laboratorio;
+        this.tipoExame = tipoExame;
     }
 
     public Integer getId() {
@@ -64,10 +74,26 @@ public class HabilitacaoExame implements Serializable {
         this.tipoExameId = tipoExameId;
     }
 
+    public Laboratorio getLaboratorio() {
+        return laboratorio;
+    }
+
+    public void setLaboratorio(Laboratorio laboratorio) {
+        this.laboratorio = laboratorio;
+    }
+
+    public TipoExame getTipoExame() {
+        return tipoExame;
+    }
+
+    public void setTipoExame(TipoExame tipoExame) {
+        this.tipoExame = tipoExame;
+    }
+
     @Override
     public String toString() {
         return "HabilitacaoExame [id=" + id + ", observacao=" + observacao + ", custo=" + custo + ", laboratorioId="
-                + laboratorioId + ", tipoExameId=" + tipoExameId + "]";
+                + laboratorio + ", tipoExameId=" + tipoExame + "]";
     }
 
     @Override

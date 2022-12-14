@@ -32,8 +32,8 @@ public class HabilitacaoExameDaoJDBC implements HabilitacaoExameDao {
 
             st.setString(1, obj.getObservacao());
             st.setLong(2, obj.getCusto());
-            st.setInt(3, obj.getLaboratorioId());
-            st.setInt(4, obj.getTipoExameId());
+            st.setInt(3, obj.getLaboratorio().getId());
+            st.setInt(4, obj.getTipoExame().getId());
 
             int rowsAffected = st.executeUpdate();
 
@@ -65,8 +65,8 @@ public class HabilitacaoExameDaoJDBC implements HabilitacaoExameDao {
 
             st.setString(1, obj.getObservacao());
             st.setLong(2, obj.getCusto());
-            st.setInt(3, obj.getLaboratorioId());
-            st.setInt(4, obj.getTipoExameId());
+            st.setInt(3, obj.getLaboratorio().getId());
+            st.setInt(4, obj.getTipoExame().getId());
 
             st.setInt(5, obj.getId());
 
