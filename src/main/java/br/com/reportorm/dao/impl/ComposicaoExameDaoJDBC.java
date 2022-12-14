@@ -111,7 +111,7 @@ public class ComposicaoExameDaoJDBC implements ComposicaoExameDao {
 			st = conn.prepareStatement(
 					"SELECT composicao_exame.*, unidade_medida.* "
 					+ "FROM composicao_exame INNER JOIN unidade_medida "
-					+ "ON composicao_exame.unidade_medida_id = composicao_exame.id "
+					+ "ON composicao_exame.unidade_medida_id = unidade_medida.id "
 					+ "WHERE composicao_exame.id = ?");
 			
 			st.setInt(1, id);
@@ -140,7 +140,7 @@ public class ComposicaoExameDaoJDBC implements ComposicaoExameDao {
 			st = conn.prepareStatement(
 					"SELECT composicao_exame.*,unidade_medida.* "
 					+ "FROM composicao_exame INNER JOIN unidade_medida "
-					+ "ON composicao_exame.unidade_medida_id = composicao_exame.id "
+					+ "ON composicao_exame.unidade_medida_id = unidade_medida.id "
 					+ "ORDER BY composicao_exame.descricao");
 			
 			rs = st.executeQuery();
