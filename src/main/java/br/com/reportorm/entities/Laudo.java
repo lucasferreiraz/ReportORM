@@ -12,17 +12,17 @@ public class Laudo implements Serializable {
     private Date dtExame;
     private String codigo;
 
-    private Integer solicitacaoExameId;
+    private SolicitacaoExame solicitacaoExame;
 
     public Laudo() {
     }
 
-    public Laudo(Integer id, String assinaturaDigital, Date dtExame, String codigo, Integer solicitacaoExameId) {
+    public Laudo(Integer id, String assinaturaDigital, Date dtExame, String codigo, SolicitacaoExame solicitacaoExame) {
         this.id = id;
         this.assinaturaDigital = assinaturaDigital;
         this.dtExame = dtExame;
         this.codigo = codigo;
-        this.solicitacaoExameId = solicitacaoExameId;
+        this.solicitacaoExame = solicitacaoExame;
     }
 
     public Integer getId() {
@@ -57,18 +57,18 @@ public class Laudo implements Serializable {
         this.codigo = codigo;
     }
 
-    public Integer getSolicitacaoExameId() {
-        return solicitacaoExameId;
+    public SolicitacaoExame getSolicitacaoExame() {
+        return solicitacaoExame;
     }
 
-    public void setSolicitacaoExameId(Integer solicitacaoExameId) {
-        this.solicitacaoExameId = solicitacaoExameId;
+    public void setSolicitacaoExame(SolicitacaoExame solicitacaoExame) {
+        this.solicitacaoExame = solicitacaoExame;
     }
 
     @Override
     public String toString() {
         return "Laudo [id=" + id + ", assinaturaDigital=" + assinaturaDigital + ", dtExame=" + dtExame + ", codigo="
-                + codigo + ", solicitacaoExame=" + solicitacaoExameId + "]";
+                + codigo + ", solicitacaoExame=" + solicitacaoExame + "]";
     }
 
     @Override
