@@ -70,7 +70,7 @@ public class MedicoHasEspecialidade implements Serializable {
 
     @Override
     public String toString() {
-        return "MedicoHasEspecialidade [id=" + id + ", medicoId=" + medicoId + ", especialidadeId=" + especialidade
+        return "MedicoHasEspecialidade [id=" + id + ", medicoId=" + medico + ", especialidadeId=" + especialidade
                 + "]";
     }
 

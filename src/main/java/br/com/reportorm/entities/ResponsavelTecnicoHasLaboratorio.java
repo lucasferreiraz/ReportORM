@@ -8,6 +8,8 @@ public class ResponsavelTecnicoHasLaboratorio implements Serializable {
 
     private Integer id;
 
+    private ResponsavelTecnico responsavelTecnico;
+    private Laboratorio laboratorio;
     private Integer responsavelTecnicoId;
     private Integer laboratorioId;
     
@@ -18,6 +20,13 @@ public class ResponsavelTecnicoHasLaboratorio implements Serializable {
         this.id = id;
         this.responsavelTecnicoId = responsavelTecnicoId;
         this.laboratorioId = laboratorioId;
+    }
+
+    public ResponsavelTecnicoHasLaboratorio(Integer id, ResponsavelTecnico responsavelTecnico,
+            Laboratorio laboratorio) {
+        this.id = id;
+        this.responsavelTecnico = responsavelTecnico;
+        this.laboratorio = laboratorio;
     }
 
     public Integer getId() {
@@ -44,10 +53,26 @@ public class ResponsavelTecnicoHasLaboratorio implements Serializable {
         this.laboratorioId = laboratorioId;
     }
 
+    public ResponsavelTecnico getResponsavelTecnico() {
+        return responsavelTecnico;
+    }
+
+    public void setResponsavelTecnico(ResponsavelTecnico responsavelTecnico) {
+        this.responsavelTecnico = responsavelTecnico;
+    }
+
+    public Laboratorio getLaboratorio() {
+        return laboratorio;
+    }
+
+    public void setLaboratorio(Laboratorio laboratorio) {
+        this.laboratorio = laboratorio;
+    }
+
     @Override
     public String toString() {
-        return "ResponsavelTecnicoHasLaboratorio [id=" + id + ", responsavelTecnicoId=" + responsavelTecnicoId
-                + ", laboratorioId=" + laboratorioId + "]";
+        return "ResponsavelTecnicoHasLaboratorio [id=" + id + ", responsavelTecnicoId=" + responsavelTecnico
+                + ", laboratorioId=" + laboratorio + "]";
     }
 
     @Override

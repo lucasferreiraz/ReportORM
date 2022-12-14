@@ -30,8 +30,8 @@ public class ResponsavelTecnicoHasLaboratorioDaoJDBC implements ResponsavelTecni
                 "INSERT INTO responsavel_tecnico_has_laboratorio (responsavel_tecnico_id,laboratorio_id) VALUES (?,?);",
             Statement.RETURN_GENERATED_KEYS);
 
-            st.setInt(1, obj.getResponsavelTecnicoId());
-            st.setInt(2, obj.getLaboratorioId());
+            st.setInt(1, obj.getResponsavelTecnico().getId());
+            st.setInt(2, obj.getLaboratorio().getId());
 
             int rowsAffected = st.executeUpdate();
 
@@ -61,8 +61,8 @@ public class ResponsavelTecnicoHasLaboratorioDaoJDBC implements ResponsavelTecni
                 "UPDATE responsavel_tecnico_has_laboratorio SET responsavel_tecnico_id = ?,laboratorio_id = ? WHERE id = ?;",
             Statement.RETURN_GENERATED_KEYS);
 
-            st.setInt(1, obj.getResponsavelTecnicoId());
-            st.setInt(2, obj.getLaboratorioId());
+            st.setInt(1, obj.getResponsavelTecnico().getId());
+            st.setInt(2, obj.getLaboratorio().getId());
 
             st.setInt(8, obj.getId());
 
