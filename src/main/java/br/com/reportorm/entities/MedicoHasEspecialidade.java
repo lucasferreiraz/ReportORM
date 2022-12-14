@@ -8,6 +8,8 @@ public class MedicoHasEspecialidade implements Serializable {
 
     private Integer id;
 
+    private Medico medico;
+    private Especialidade especialidade;
     private Integer medicoId;
     private Integer especialidadeId;
     
@@ -18,6 +20,12 @@ public class MedicoHasEspecialidade implements Serializable {
         this.id = id;
         this.medicoId = medicoId;
         this.especialidadeId = especialidadeId;
+    }
+
+    public MedicoHasEspecialidade(Integer id, Medico medico, Especialidade especialidade) {
+        this.id = id;
+        this.medico = medico;
+        this.especialidade = especialidade;
     }
 
     public Integer getId() {
@@ -44,9 +52,25 @@ public class MedicoHasEspecialidade implements Serializable {
         this.especialidadeId = especialidadeId;
     }
 
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public Especialidade getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(Especialidade especialidade) {
+        this.especialidade = especialidade;
+    }
+
     @Override
     public String toString() {
-        return "MedicoHasEspecialidade [id=" + id + ", medicoId=" + medicoId + ", especialidadeId=" + especialidadeId
+        return "MedicoHasEspecialidade [id=" + id + ", medicoId=" + medicoId + ", especialidadeId=" + especialidade
                 + "]";
     }
 

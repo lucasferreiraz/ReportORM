@@ -30,8 +30,8 @@ public class MedicoHasEspecialidadeDaoJDBC implements MedicoHasEspecialidadeDao 
                 "INSERT INTO medico_has_especialidade (medico_id,especialidade_id) VALUES (?,?);",
             Statement.RETURN_GENERATED_KEYS);
 
-            st.setInt(1, obj.getMedicoId());
-            st.setInt(2, obj.getEspecialidadeId());
+            st.setInt(1, obj.getMedico().getId());
+            st.setInt(2, obj.getEspecialidade().getId());
 
             int rowsAffected = st.executeUpdate();
 
@@ -61,8 +61,8 @@ public class MedicoHasEspecialidadeDaoJDBC implements MedicoHasEspecialidadeDao 
                 "UPDATE medico_has_especialidade SET medico_id = ?,especialidade_id = ? WHERE id = ?;",
             Statement.RETURN_GENERATED_KEYS);
 
-            st.setInt(1, obj.getMedicoId());
-            st.setInt(2, obj.getEspecialidadeId());
+            st.setInt(1, obj.getMedico().getId());
+            st.setInt(2, obj.getEspecialidade().getId());
 
             st.setInt(3, obj.getId());
 
