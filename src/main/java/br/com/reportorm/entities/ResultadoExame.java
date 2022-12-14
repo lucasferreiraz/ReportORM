@@ -11,6 +11,8 @@ public class ResultadoExame implements Serializable {
     private Date dt_exame;
     private String valor;
 
+    private Composicao composicao;
+    private Laudo laudo;
     private Integer composicaoId;
     private Integer laudoId;
     
@@ -23,6 +25,14 @@ public class ResultadoExame implements Serializable {
         this.valor = valor;
         this.composicaoId = composicaoId;
         this.laudoId = laudoId;
+    }
+
+    public ResultadoExame(Integer id, Date dt_exame, String valor, Composicao composicao, Laudo laudo) {
+        this.id = id;
+        this.dt_exame = dt_exame;
+        this.valor = valor;
+        this.composicao = composicao;
+        this.laudo = laudo;
     }
 
     public Integer getId() {
@@ -63,6 +73,22 @@ public class ResultadoExame implements Serializable {
 
     public void setLaudoId(Integer laudoId) {
         this.laudoId = laudoId;
+    }
+
+    public Composicao getComposicao() {
+        return composicao;
+    }
+
+    public void setComposicao(Composicao composicao) {
+        this.composicao = composicao;
+    }
+
+    public Laudo getLaudo() {
+        return laudo;
+    }
+
+    public void setLaudo(Laudo laudo) {
+        this.laudo = laudo;
     }
 
     @Override

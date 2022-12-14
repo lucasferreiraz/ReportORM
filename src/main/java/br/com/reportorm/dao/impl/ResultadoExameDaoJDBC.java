@@ -35,8 +35,8 @@ public class ResultadoExameDaoJDBC implements ResultadoExameDao {
 			
 			st.setDate(1, new Date(obj.getDt_exame().getTime()));
 			st.setString(2, obj.getValor());
-			st.setInt(3, obj.getComposicaoId());
-			st.setInt(4, obj.getLaudoId());
+			st.setInt(3, obj.getComposicao().getId());
+			st.setInt(4, obj.getLaudo().getId());
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -71,8 +71,8 @@ public class ResultadoExameDaoJDBC implements ResultadoExameDao {
 			
 			st.setDate(1, new Date(obj.getDt_exame().getTime()));
 			st.setString(2, obj.getValor());
-			st.setInt(3, obj.getComposicaoId());
-			st.setInt(4, obj.getLaudoId());
+			st.setInt(3, obj.getComposicao().getId());
+			st.setInt(4, obj.getLaudo().getId());
 
 			st.setInt(5, obj.getId());
 			
