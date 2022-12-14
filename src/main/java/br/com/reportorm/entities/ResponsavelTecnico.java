@@ -84,7 +84,7 @@ public class ResponsavelTecnico implements Serializable {
     @Override
     public String toString() {
         return "ResponsavelTecnico [id=" + id + ", nome=" + nome + ", conselho=" + conselho + ", formacao=" + formacao
-                + ", siglaFormacaoId=" + siglaFormacaoId + "]";
+                + ", siglaFormacaoId=" + siglaFormacao + "]";
     }
 
     @Override

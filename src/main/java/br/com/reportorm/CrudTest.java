@@ -19,13 +19,13 @@ public class CrudTest {
         Contato contato = new Contato(null, "988380012", laboratorio);
         new ContatoService().insert(contato);
 
-        Endereco endereco = new Endereco(null, "Paulo Afonso", "41", "Baixos", "Jereissati II", "61920690", "Maracanaú", 1);
+        Endereco endereco = new Endereco(null, "Paulo Afonso", "41", "Baixos", "Jereissati II", "61920690", "Maracanaú", laboratorio);
         new EnderecoService().insert(endereco);
 
         SiglaFormacao siglaFormacao = new SiglaFormacao(null, "Dr(a)");
         new SiglaFormacaoService().insert(siglaFormacao);
         
-        ResponsavelTecnico responsavelTecnico = new ResponsavelTecnico(null, "Maria do Socorro", "CME", "Pediatra", 1);
+        ResponsavelTecnico responsavelTecnico = new ResponsavelTecnico(null, "Maria do Socorro", "CME", "Pediatra", siglaFormacao);
         new ResponsavelTecnicoService().insert(responsavelTecnico);
 
         Paciente paciente = null;
@@ -72,13 +72,13 @@ public class CrudTest {
         ComposicaoExame composicaoExame = new ComposicaoExame(null, "Composto", unidadeMedida);
         new ComposicaoExameService().insert(composicaoExame);
 
-        ValorReferenciaComposicaoExame valorReferenciaComposicaoExame = new ValorReferenciaComposicaoExame(null, "0", "40", "10",  "50", 1);
+        ValorReferenciaComposicaoExame valorReferenciaComposicaoExame = new ValorReferenciaComposicaoExame(null, "0", "40", "10",  "50", unidadeMedida);
         new ValorReferenciaComposicaoExameService().insert(valorReferenciaComposicaoExame);
 
         Composicao composicao = new Composicao(null, 1, 1, 1);
         new ComposicaoService().insert(composicao);
 
-        Laudo laudo = new Laudo(null, "123456789", new Date(), "123456789", 1);
+        Laudo laudo = new Laudo(null, "123456789", new Date(), "123456789", solicitacaoExame);
         new LaudoService().insert(laudo);
 
         ResultadoExame resultadoExame = new ResultadoExame(null, new Date(), "130.00", 1 , 1);
