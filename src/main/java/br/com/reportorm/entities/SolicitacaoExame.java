@@ -11,6 +11,9 @@ public class SolicitacaoExame implements Serializable {
     private String nmPrescrito;
     private Date dtSolicitacao;
 
+    private ConsultaMedica consultaMedica;
+    private HabilitacaoExame habilitacaoExame;
+    private Exame exame;
     private Integer consultaMedicaId;
     private Integer habilitacaoExameId;
     private Integer exameId;
@@ -26,6 +29,16 @@ public class SolicitacaoExame implements Serializable {
         this.consultaMedicaId = consultaMedicaId;
         this.habilitacaoExameId = habilitacaoExameId;
         this.exameId = exameId;
+    }
+
+    public SolicitacaoExame(Integer id, String nmPrescrito, Date dtSolicitacao, ConsultaMedica consultaMedica,
+            HabilitacaoExame habilitacaoExame, Exame exame) {
+        this.id = id;
+        this.nmPrescrito = nmPrescrito;
+        this.dtSolicitacao = dtSolicitacao;
+        this.consultaMedica = consultaMedica;
+        this.habilitacaoExame = habilitacaoExame;
+        this.exame = exame;
     }
 
     public Integer getId() {
@@ -76,11 +89,35 @@ public class SolicitacaoExame implements Serializable {
         this.exameId = exameId;
     }
 
+    public ConsultaMedica getConsultaMedica() {
+        return consultaMedica;
+    }
+
+    public void setConsultaMedica(ConsultaMedica consultaMedica) {
+        this.consultaMedica = consultaMedica;
+    }
+
+    public HabilitacaoExame getHabilitacaoExame() {
+        return habilitacaoExame;
+    }
+
+    public void setHabilitacaoExame(HabilitacaoExame habilitacaoExame) {
+        this.habilitacaoExame = habilitacaoExame;
+    }
+
+    public Exame getExame() {
+        return exame;
+    }
+
+    public void setExame(Exame exame) {
+        this.exame = exame;
+    }
+
     @Override
     public String toString() {
         return "SolicitacaoExame [id=" + id + ", nmPrescrito=" + nmPrescrito + ", dtSolicitacao=" + dtSolicitacao
-                + ", consultaMedicaId=" + consultaMedicaId + ", habilitacaoExameId=" + habilitacaoExameId + ", exameId="
-                + exameId + "]";
+                + ", consultaMedicaId=" + consultaMedica + ", habilitacaoExameId=" + habilitacaoExame + ", exameId="
+                + exame + "]";
     }
 
     @Override

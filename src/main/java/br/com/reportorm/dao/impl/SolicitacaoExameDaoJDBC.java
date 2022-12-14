@@ -33,9 +33,9 @@ public class SolicitacaoExameDaoJDBC implements SolicitacaoExameDao {
 
             st.setString(1, obj.getNmPrescrito());
             st.setDate(2, new Date(obj.getDtSolicitacao().getTime()));
-            st.setInt(3, obj.getConsultaMedicaId());
-            st.setInt(4, obj.getHabilitacaoExameId());
-            st.setInt(5, obj.getExameId());
+            st.setInt(3, obj.getConsultaMedica().getId());
+            st.setInt(4, obj.getHabilitacaoExame().getId());
+            st.setInt(5, obj.getExame().getId());
 
             int rowsAffected = st.executeUpdate();
 
@@ -67,9 +67,9 @@ public class SolicitacaoExameDaoJDBC implements SolicitacaoExameDao {
 
             st.setString(1, obj.getNmPrescrito());
             st.setDate(2, new Date(obj.getDtSolicitacao().getTime()));
-            st.setInt(3, obj.getConsultaMedicaId());
-            st.setInt(4, obj.getHabilitacaoExameId());
-            st.setInt(5, obj.getExameId());
+            st.setInt(3, obj.getConsultaMedica().getId());
+            st.setInt(4, obj.getHabilitacaoExame().getId());
+            st.setInt(5, obj.getExame().getId());
 
             st.setInt(6, obj.getId());
 
