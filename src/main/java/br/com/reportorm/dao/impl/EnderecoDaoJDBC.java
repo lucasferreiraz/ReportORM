@@ -6,12 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.com.reportorm.dao.EnderecoDao;
 import br.com.reportorm.database.DB;
 import br.com.reportorm.database.DbException;
 import br.com.reportorm.entities.Endereco;
+import br.com.reportorm.entities.Laboratorio;
 
 public class EnderecoDaoJDBC implements EnderecoDao {
 
@@ -36,7 +39,7 @@ public class EnderecoDaoJDBC implements EnderecoDao {
             st.setString(4, obj.getBairro());
             st.setString(5, obj.getCEP());
             st.setString(6, obj.getCidade());
-            st.setInt(7, obj.getLaboratorioId());
+            st.setInt(7, obj.getLaboratorio().getId());
 
             int rowsAffected = st.executeUpdate();
 
@@ -72,7 +75,7 @@ public class EnderecoDaoJDBC implements EnderecoDao {
             st.setString(4, obj.getBairro());
             st.setString(5, obj.getCEP());
             st.setString(6, obj.getCidade());
-            st.setInt(7, obj.getLaboratorioId());
+            st.setInt(7, obj.getLaboratorio().getId());
 
             st.setInt(8, obj.getId());
 
@@ -113,14 +116,17 @@ public class EnderecoDaoJDBC implements EnderecoDao {
 
         try {
             st = conn.prepareStatement(
-                "SELECT id, * FROM endereco WHERE id = ?"
-            );
+                    "SELECT endereco.*, laboratorio.* "
+                            + "FROM endereco INNER JOIN laboratorio "
+                            + "ON endereco.laboratorio_id = laboratorio.id "
+                            + "WHERE endereco.id = ?");
 
             st.setInt(1, id);
             rs = st.executeQuery();
 
-            if(rs.next()){
-                Endereco endereco = instantiateEndereco(rs);
+            if (rs.next()) {
+                Laboratorio laboratorio = instantiateLaboratorio(rs);
+                Endereco endereco = instantiateEndereco(rs, laboratorio);
                 return endereco;
             }
 
@@ -137,21 +143,29 @@ public class EnderecoDaoJDBC implements EnderecoDao {
     public List<Endereco> findAll() {
         PreparedStatement st = null;
         ResultSet rs = null;
-
-        List<Endereco> enderecoList = new ArrayList<>();
-
         try {
             st = conn.prepareStatement(
-                "SELECT * FROM endereco;"
-            );
+                    "SELECT endereco.*, laboratorio.* "
+                            + "FROM endereco INNER JOIN laboratorio "
+                            + "ON endereco.laboratorio_id = laboratorio.id");
 
             rs = st.executeQuery();
 
-            while(rs.next()){
-                Endereco endereco = instantiateEndereco(rs);
-                enderecoList.add(endereco);
-            }
+            List<Endereco> enderecoList = new ArrayList<>();
+            Map<Integer, Laboratorio> map = new HashMap<>();
 
+            while (rs.next()) {
+
+                Laboratorio uni = map.get(rs.getInt("unidade_medida_id"));
+
+                if (uni == null) {
+                    uni = instantiateLaboratorio(rs);
+                    map.put(rs.getInt("unidade_medida_id"), uni);
+                }
+
+                Endereco obj = instantiateEndereco(rs, uni);
+                enderecoList.add(obj);
+            }
             return enderecoList;
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
@@ -161,7 +175,7 @@ public class EnderecoDaoJDBC implements EnderecoDao {
         }
     }
 
-    private Endereco instantiateEndereco(ResultSet rs) throws SQLException {
+    private Endereco instantiateEndereco(ResultSet rs, Laboratorio laboratorio) throws SQLException {
         Endereco endereco = new Endereco();
         endereco.setId(rs.getInt("id"));
         endereco.setRua(rs.getString("rua"));
@@ -170,9 +184,21 @@ public class EnderecoDaoJDBC implements EnderecoDao {
         endereco.setBairro(rs.getString("bairro"));
         endereco.setCEP(rs.getString("CEP"));
         endereco.setCidade(rs.getString("cidade"));
-        endereco.setLaboratorioId(rs.getInt("laboratorio_id"));
+        endereco.setLaboratorio(laboratorio);
 
         return endereco;
+    }
+
+    private Laboratorio instantiateLaboratorio(ResultSet rs) throws SQLException {
+        Laboratorio laboratorio = new Laboratorio();
+        laboratorio.setId(rs.getInt("laboratorio_id"));
+        laboratorio.setDescricao(rs.getString("descricao"));
+        laboratorio.setCNES(rs.getString("cnes"));
+        laboratorio.setCNPJ(rs.getString("cnpj"));
+        laboratorio.setCRBM(rs.getString("crbm"));
+        laboratorio.setNome_fantasia(rs.getString("nome_fantasia"));
+
+        return laboratorio;
     }
     
 }

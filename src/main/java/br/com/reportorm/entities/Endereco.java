@@ -14,6 +14,7 @@ public class Endereco implements Serializable {
     private String CEP;
     private String cidade;
 
+    private Laboratorio laboratorio;
     private Integer laboratorioId;
 
     public Endereco() {
@@ -29,6 +30,18 @@ public class Endereco implements Serializable {
         this.CEP = cEP;
         this.cidade = cidade;
         this.laboratorioId = laboratorioId;
+    }
+
+    public Endereco(Integer id, String rua, String numero, String complemento, String bairro, String cEP, String cidade,
+            Laboratorio laboratorio) {
+        this.id = id;
+        this.rua = rua;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        CEP = cEP;
+        this.cidade = cidade;
+        this.laboratorio = laboratorio;
     }
 
     public Integer getId() {
@@ -95,10 +108,18 @@ public class Endereco implements Serializable {
         this.laboratorioId = laboratorioId;
     }
 
+    public Laboratorio getLaboratorio() {
+        return laboratorio;
+    }
+
+    public void setLaboratorio(Laboratorio laboratorio) {
+        this.laboratorio = laboratorio;
+    }
+
     @Override
     public String toString() {
         return "Endereco [id=" + id + ", rua=" + rua + ", numero=" + numero + ", complemento=" + complemento
-                + ", bairro=" + bairro + ", CEP=" + CEP + ", cidade=" + cidade + ", laboratorioId=" + laboratorioId
+                + ", bairro=" + bairro + ", CEP=" + CEP + ", cidade=" + cidade + ", laboratorioId=" + laboratorio
                 + "]";
     }
 
