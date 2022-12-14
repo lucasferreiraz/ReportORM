@@ -11,15 +11,15 @@ public class App {
             throw new RuntimeException("Ops! Erro ao conectar com o banco de dados. :(");
         }
 
-        /* 
-        CrudTest.insertions();
-        System.out.println("Operações de inserção executadas com sucesso!");
-        */
+        
+        // CrudTest.insertions();
+        // System.out.println("Operações de inserção executadas com sucesso!");
+        
 
-        /*
-        CrudTest.reset();
-        System.out.println("Tabelas resetadas!");
-         */
+         
+        // CrudTest.reset();
+        // System.out.println("Tabelas resetadas!");
+        
     }
 
 }

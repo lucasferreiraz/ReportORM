@@ -42,28 +42,28 @@ public class CrudTest {
         Especialidade especialidade = new Especialidade(null, "Infectologia", "Doutor");
         new EspecialidadeService().insert(especialidade);
 
-        MedicoHasEspecialidade medicoHasEspecialidade = new MedicoHasEspecialidade(null, 1, 1);
+        MedicoHasEspecialidade medicoHasEspecialidade = new MedicoHasEspecialidade(null, medico, especialidade);
         new MedicoHasEspecialidadeService().insert(medicoHasEspecialidade);
         
-        ResponsavelTecnicoHasLaboratorio responsavelTecnicoHasLaboratorio = new ResponsavelTecnicoHasLaboratorio(null, 1, 1);
+        ResponsavelTecnicoHasLaboratorio responsavelTecnicoHasLaboratorio = new ResponsavelTecnicoHasLaboratorio(null, responsavelTecnico, laboratorio);
         new ResponsavelTecnicoHasLaboratorioService().insert(responsavelTecnicoHasLaboratorio);
         
-        ConsultaMedica consultaMedica = new ConsultaMedica(null, new Date(), "5056", 1, 1);
+        ConsultaMedica consultaMedica = new ConsultaMedica(null, new Date(), "5056", medico, paciente);
         new ConsultaMedicaService().insert(consultaMedica);
 
         TipoExame tipoExame = new TipoExame(null, "Exame Avaliativo", "Rotina");
         new TipoExameService().insert(tipoExame);
 
-        HabilitacaoExame habilitacaoExame = new HabilitacaoExame(null, "Pendente", 130L, 1, 1);
+        HabilitacaoExame habilitacaoExame = new HabilitacaoExame(null, "Pendente", 130L, laboratorio, tipoExame);
         new HabilitacaoExameService().insert(habilitacaoExame);
 
         MaterialExame materialExame = new MaterialExame(null, "Estetoscópio", "Usado");
         new MaterialExameService().insert(materialExame);
 
-        Exame exame = new Exame(null, "Exame", "Padrão", 1, 1);
+        Exame exame = new Exame(null, "Exame", "Padrão", tipoExame, materialExame);
         new ExameService().insert(exame);
 
-        SolicitacaoExame solicitacaoExame = new SolicitacaoExame(null, "1234", new Date(), 1, 1, 1);
+        SolicitacaoExame solicitacaoExame = new SolicitacaoExame(null, "1234", new Date(), consultaMedica, habilitacaoExame, exame);
         new SolicitacaoExameService().insert(solicitacaoExame);
 
         UnidadeMedida unidadeMedida = new UnidadeMedida(null, "mg");
@@ -75,13 +75,13 @@ public class CrudTest {
         ValorReferenciaComposicaoExame valorReferenciaComposicaoExame = new ValorReferenciaComposicaoExame(null, "0", "40", "10",  "50", unidadeMedida);
         new ValorReferenciaComposicaoExameService().insert(valorReferenciaComposicaoExame);
 
-        Composicao composicao = new Composicao(null, 1, 1, 1);
+        Composicao composicao = new Composicao(null, exame, composicaoExame, valorReferenciaComposicaoExame);
         new ComposicaoService().insert(composicao);
 
         Laudo laudo = new Laudo(null, "123456789", new Date(), "123456789", solicitacaoExame);
         new LaudoService().insert(laudo);
 
-        ResultadoExame resultadoExame = new ResultadoExame(null, new Date(), "130.00", 1 , 1);
+        ResultadoExame resultadoExame = new ResultadoExame(null, new Date(), "130.00", composicao , laudo);
         new ResultadoExameService().insert(resultadoExame);
 
     }
