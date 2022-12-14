@@ -89,25 +89,56 @@ public class CrudTest {
     //In testing! Do not use.
     public static void reset(){
 
-        String[] tables = {
-            "resultado_exame", "laudo", "composicao", "valor_referencia_composicao_exame", "composicao_exame", "unidade_medida" , "solicitacao_exame", "exame", "material_exame", "habilitacao_exame", "tipo_exame", "consulta_medica", "responsavel_tecnico_has_laboratorio", "medico_has_especialidade", "especialidade", "medico", "paciente", "responsavel_tecnico", "sigla_formacao", "endereco", "contato", "laboratorio"
+        String[] tables1 = {
+            "responsavel_tecnico_has_laboratorio", "medico_has_especialidade"
         };
+        resettor(tables1);
 
-        for(String table : tables){
+        String[] tables2 = {
+            "resultado_exame", "laudo", "solicitacao_exame",  "habilitacao_exame", "consulta_medica", "composicao", "exame", "valor_referencia_composicao_exame", "composicao_exame", "responsavel_tecnico", "endereco", "contato"
+        };
+        resettor(tables2);
 
-            String delete = "DELETE FROM " + table +";";
-            String resetseq = "ALTER SEQUENCE " + table +"_id_seq RESTART;";
+        String[] tables3 = {
+            "unidade_medida" ,  "exame", "material_exame", "tipo_exame",    "especialidade", "medico", "paciente",  "sigla_formacao",   "laboratorio"
+        };
+        resettor(tables3);
+        
+    }
 
-            try (PreparedStatement statement = DB.getConnection().prepareStatement(delete)){
-                statement.executeUpdate();
-            }catch (Exception e){
-                throw new RuntimeException(e);
-            }
-            try (PreparedStatement statement = DB.getConnection().prepareStatement(resetseq)) {
+    private static void resettor(String[] tables) {
+        for (String table : tables) {
+
+            String delete = "DELETE FROM " + table + ";";
+            String resetseq = null;
+
+            try (PreparedStatement statement = DB.getConnection().prepareStatement(delete)) {
                 statement.executeUpdate();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+
+            if (!isManyToMany(table)) {
+                resetseq = "ALTER SEQUENCE " + table + "_id_seq RESTART;";
+
+                try (PreparedStatement statement = DB.getConnection().prepareStatement(resetseq)) {
+                    statement.executeUpdate();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+    }
+
+    private static boolean isManyToMany(String table){
+        switch (table) {
+            case "responsavel_tecnico_has_laboratorio":
+                return true;
+            case "medico_has_especialidade":
+                return true;
+            default:
+                return false;
         }
     }
 
