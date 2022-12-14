@@ -32,8 +32,8 @@ public class ConsultaMedicaDaoJDBC implements ConsultaMedicaDao {
             Statement.RETURN_GENERATED_KEYS);
 
             st.setDate(1, new Date(obj.getDtConsulta().getTime()));
-            st.setInt(2, obj.getMedicoId());
-            st.setInt(3, obj.getPacienteId());
+            st.setInt(2, obj.getMedico().getId());
+            st.setInt(3, obj.getPaciente().getId());
             st.setString(4, obj.getNmAtendimento());
 
             int rowsAffected = st.executeUpdate();
@@ -65,8 +65,8 @@ public class ConsultaMedicaDaoJDBC implements ConsultaMedicaDao {
             Statement.RETURN_GENERATED_KEYS);
 
             st.setDate(1, new Date(obj.getDtConsulta().getTime()));
-            st.setInt(2, obj.getMedicoId());
-            st.setInt(3, obj.getPacienteId());
+            st.setInt(2, obj.getMedico().getId());
+            st.setInt(3, obj.getPaciente().getId());
             st.setString(4, obj.getNmAtendimento());
 
             st.setInt(5, obj.getId());

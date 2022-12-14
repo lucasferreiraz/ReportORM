@@ -11,6 +11,8 @@ public class ConsultaMedica implements Serializable {
     private Date dtConsulta;
     private String nmAtendimento;
 
+    private Medico medico;
+    private Paciente paciente;
     private Integer medicoId;
     private Integer pacienteId;
     
@@ -23,6 +25,14 @@ public class ConsultaMedica implements Serializable {
         this.nmAtendimento = nmAtendimento;
         this.medicoId = medicoId;
         this.pacienteId = pacienteId;
+    }
+
+    public ConsultaMedica(Integer id, Date dtConsulta, String nmAtendimento, Medico medico, Paciente paciente) {
+        this.id = id;
+        this.dtConsulta = dtConsulta;
+        this.nmAtendimento = nmAtendimento;
+        this.medico = medico;
+        this.paciente = paciente;
     }
 
     public Integer getId() {
@@ -65,10 +75,26 @@ public class ConsultaMedica implements Serializable {
         this.pacienteId = pacienteId;
     }
 
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
     @Override
     public String toString() {
         return "ConsultaMedica [id=" + id + ", dtConsulta=" + dtConsulta + ", nmAtendimento=" + nmAtendimento
-                + ", medicoId=" + medicoId + ", pacienteId=" + pacienteId + "]";
+                + ", medicoId=" + medico + ", pacienteId=" + paciente + "]";
     }
 
     @Override
