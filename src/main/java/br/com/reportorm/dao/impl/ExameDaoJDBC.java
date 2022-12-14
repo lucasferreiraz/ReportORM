@@ -32,8 +32,8 @@ public class ExameDaoJDBC implements ExameDao {
 					+ "(?,?,?,?);",
 					Statement.RETURN_GENERATED_KEYS);
 			
-				st.setInt(1, obj.getTipoExameId());
-				st.setInt(2, obj.getMaterialExameId());
+				st.setInt(1, obj.getTipoExame().getId());
+				st.setInt(2, obj.getMaterialExame().getId());
 				st.setString(3, obj.getDescricao());
 				st.setString(4, obj.getMetodo());
 			
@@ -68,8 +68,8 @@ public class ExameDaoJDBC implements ExameDao {
 					+ "SET tipo_exame_id = ?,material_exame_id = ?,descricao = ?,metodo = ? "
 					+ "WHERE id = ?;");
 			
-			st.setInt(1, obj.getTipoExameId());
-			st.setInt(1, obj.getMaterialExameId());
+			st.setInt(1, obj.getTipoExame().getId());
+			st.setInt(2, obj.getMaterialExame().getId());
 			st.setString(3, obj.getDescricao());
 			st.setString(4, obj.getMetodo());
 

@@ -10,6 +10,8 @@ public class Exame implements Serializable {
     private String descricao;
     private String metodo;
 
+    private TipoExame tipoExame;
+    private MaterialExame materialExame;
     private Integer tipoExameId;
     private Integer materialExameId;
 
@@ -22,6 +24,14 @@ public class Exame implements Serializable {
         this.metodo = metodo;
         this.tipoExameId = tipoExameId;
         this.materialExameId = materialExameId;
+    }
+
+    public Exame(Integer id, String descricao, String metodo, TipoExame tipoExame, MaterialExame materialExame) {
+        this.id = id;
+        this.descricao = descricao;
+        this.metodo = metodo;
+        this.tipoExame = tipoExame;
+        this.materialExame = materialExame;
     }
 
     public Integer getId() {
@@ -64,10 +74,26 @@ public class Exame implements Serializable {
         this.materialExameId = materialExameId;
     }
 
+    public TipoExame getTipoExame() {
+        return tipoExame;
+    }
+
+    public void setTipoExame(TipoExame tipoExame) {
+        this.tipoExame = tipoExame;
+    }
+
+    public MaterialExame getMaterialExame() {
+        return materialExame;
+    }
+
+    public void setMaterialExame(MaterialExame materialExame) {
+        this.materialExame = materialExame;
+    }
+
     @Override
     public String toString() {
-        return "Exame [id=" + id + ", descricao=" + descricao + ", metodo=" + metodo + ", tipoExameId=" + tipoExameId
-                + ", materialExameId=" + materialExameId + "]";
+        return "Exame [id=" + id + ", descricao=" + descricao + ", metodo=" + metodo + ", tipoExameId=" + tipoExame
+                + ", materialExameId=" + materialExame + "]";
     }
 
     @Override
