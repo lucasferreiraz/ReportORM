@@ -12,19 +12,19 @@ public class ValorReferenciaComposicaoExame implements Serializable {
     private String limitadorMinimo;
     private String limitadorMaximo;
 
-    private Integer unidadeMedidaId;
+    private UnidadeMedida unidadeMedida;
 
     public ValorReferenciaComposicaoExame() {
     }
 
     public ValorReferenciaComposicaoExame(Integer id, String valorMinimo, String valorMaximo, String limitadorMinimo,
-            String limitadorMaximo, Integer unidadeMedidaId) {
+            String limitadorMaximo, UnidadeMedida unidadeMedida) {
         this.id = id;
         this.valorMinimo = valorMinimo;
         this.valorMaximo = valorMaximo;
         this.limitadorMinimo = limitadorMinimo;
         this.limitadorMaximo = limitadorMaximo;
-        this.unidadeMedidaId = unidadeMedidaId;
+        this.unidadeMedida = unidadeMedida;
     }
 
     public Integer getId() {
@@ -67,19 +67,19 @@ public class ValorReferenciaComposicaoExame implements Serializable {
         this.limitadorMaximo = limitadorMaximo;
     }
 
-    public Integer getUnidadeMedidaId() {
-        return unidadeMedidaId;
+    public UnidadeMedida getUnidadeMedida() {
+        return unidadeMedida;
     }
 
-    public void setUnidadeMedidaId(Integer unidadeMedidaId) {
-        this.unidadeMedidaId = unidadeMedidaId;
+    public void setUnidadeMedida(UnidadeMedida unidadeMedida) {
+        this.unidadeMedida = unidadeMedida;
     }
 
     @Override
     public String toString() {
         return "ValorReferenciaComposicaoExame [id=" + id + ", valorMinimo=" + valorMinimo + ", valorMaximo="
                 + valorMaximo + ", limitadorMinimo=" + limitadorMinimo + ", limitadorMaximo=" + limitadorMaximo
-                + ", unidadeMedidaId=" + unidadeMedidaId + "]";
+                + ", unidadeMedidaId=" + unidadeMedida + "]";
     }
 
     @Override

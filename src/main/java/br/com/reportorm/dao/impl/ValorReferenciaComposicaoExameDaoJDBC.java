@@ -6,11 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.com.reportorm.dao.ValorReferenciaComposicaoExameDao;
 import br.com.reportorm.database.DB;
 import br.com.reportorm.database.DbException;
+import br.com.reportorm.entities.UnidadeMedida;
 import br.com.reportorm.entities.ValorReferenciaComposicaoExame;
 
 public class ValorReferenciaComposicaoExameDaoJDBC implements ValorReferenciaComposicaoExameDao {
@@ -34,7 +37,7 @@ public class ValorReferenciaComposicaoExameDaoJDBC implements ValorReferenciaCom
             st.setString(2, obj.getValorMaximo());
             st.setString(3, obj.getLimitadorMinimo());
             st.setString(4, obj.getLimitadorMaximo());
-            st.setInt(5, obj.getUnidadeMedidaId());
+            st.setInt(5, obj.getUnidadeMedida().getId());
 
             int rowsAffected = st.executeUpdate();
 
@@ -68,7 +71,7 @@ public class ValorReferenciaComposicaoExameDaoJDBC implements ValorReferenciaCom
             st.setString(2, obj.getValorMaximo());
             st.setString(3, obj.getLimitadorMinimo());
             st.setString(4, obj.getLimitadorMaximo());
-            st.setInt(5, obj.getUnidadeMedidaId());
+            st.setInt(5, obj.getUnidadeMedida().getId());
 
             st.setInt(6, obj.getId());
 
@@ -112,11 +115,18 @@ public class ValorReferenciaComposicaoExameDaoJDBC implements ValorReferenciaCom
                 "SELECT id, * FROM valor_referencia_composicao_exame WHERE id = ?"
             );
 
+            st = conn.prepareStatement(
+					"SELECT valor_referencia_composicao_exame.*,unidade_medida.* "
+					+ "FROM valor_referencia_composicao_exame INNER JOIN unidade_medida "
+					+ "ON valor_referencia_composicao_exame.unidade_medida_id = composicao_exame.id "
+					+ "WHERE valor_referencia_composicao_exame.id = ?");
+
             st.setInt(1, id);
             rs = st.executeQuery();
 
             if(rs.next()){
-                ValorReferenciaComposicaoExame valorReferenciaComposicaoExame = instantiateValorReferenciaComposicaoExame(rs);
+                UnidadeMedida unidadeMedida = instantiateUnidadeMedida(rs);
+                ValorReferenciaComposicaoExame valorReferenciaComposicaoExame = instantiateValorReferenciaComposicaoExame(rs, unidadeMedida);
                 return valorReferenciaComposicaoExame;
             }
 
@@ -130,43 +140,60 @@ public class ValorReferenciaComposicaoExameDaoJDBC implements ValorReferenciaCom
     }
 
     @Override
-    public List<ValorReferenciaComposicaoExame> findAll() {
-        PreparedStatement st = null;
-        ResultSet rs = null;
+	public List<ValorReferenciaComposicaoExame> findAll() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT valor_referencia_composicao_exame.*,unidade_medida.* "
+					+ "FROM valor_referencia_composicao_exame INNER JOIN unidade_medida "
+					+ "ON valor_referencia_composicao_exame.unidade_medida_id = composicao_exame.id");
+			
+			rs = st.executeQuery();
+			
+			List<ValorReferenciaComposicaoExame> list = new ArrayList<>();
+			Map<Integer, UnidadeMedida> map = new HashMap<>();
+			
+			while (rs.next()) {
+				
+				UnidadeMedida uni = map.get(rs.getInt("unidade_medida_id"));
+				
+				if (uni == null) {
+					uni = instantiateUnidadeMedida(rs);
+					map.put(rs.getInt("unidade_medida_id"), uni);
+				}
+				
+				ValorReferenciaComposicaoExame obj = instantiateValorReferenciaComposicaoExame(rs, uni);
+				list.add(obj);
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+	}
 
-        List<ValorReferenciaComposicaoExame> list = new ArrayList<>();
-
-        try {
-            st = conn.prepareStatement(
-                "SELECT * FROM valor_referencia_composicao_exame;"
-            );
-
-            rs = st.executeQuery();
-
-            while(rs.next()){
-                ValorReferenciaComposicaoExame valorReferenciaComposicaoExame = instantiateValorReferenciaComposicaoExame(rs);
-                list.add(valorReferenciaComposicaoExame);
-            }
-
-            return list;
-        } catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        } finally {
-            DB.closeStatement(st);
-            DB.closeResultSet(rs);
-        }
-    }
-
-    private ValorReferenciaComposicaoExame instantiateValorReferenciaComposicaoExame(ResultSet rs) throws SQLException {
+    private ValorReferenciaComposicaoExame instantiateValorReferenciaComposicaoExame(ResultSet rs, UnidadeMedida unidadeMedida) throws SQLException {
         ValorReferenciaComposicaoExame obj = new ValorReferenciaComposicaoExame();
         obj.setId(rs.getInt("id"));
         obj.setValorMinimo(rs.getString("valor_minimo"));
         obj.setValorMaximo(rs.getString("valor_maximo"));
         obj.setLimitadorMinimo(rs.getString("limitador_minimo"));
         obj.setLimitadorMaximo(rs.getString("limitador_maximo"));
-        obj.setUnidadeMedidaId(rs.getInt("unidade_medida_id"));
+        obj.setUnidadeMedida(unidadeMedida);
 
         return obj;
     }
+
+    private UnidadeMedida instantiateUnidadeMedida(ResultSet rs) throws SQLException {
+		UnidadeMedida unidadeMedida = new UnidadeMedida();
+		unidadeMedida.setId(rs.getInt("unidade_medida_id"));
+		unidadeMedida.setDescricao(rs.getString("descricao"));
+		return unidadeMedida;
+	}
     
 }
