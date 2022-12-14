@@ -11,6 +11,7 @@ public class ResponsavelTecnico implements Serializable {
     private String conselho;
     private String formacao;
 
+    private SiglaFormacao siglaFormacao;
     private Integer siglaFormacaoId;
 
     public ResponsavelTecnico() {
@@ -22,6 +23,14 @@ public class ResponsavelTecnico implements Serializable {
         this.conselho = conselho;
         this.formacao = formacao;
         this.siglaFormacaoId = siglaFormacaoId;
+    }
+
+    public ResponsavelTecnico(Integer id, String nome, String conselho, String formacao, SiglaFormacao siglaFormacao) {
+        this.id = id;
+        this.nome = nome;
+        this.conselho = conselho;
+        this.formacao = formacao;
+        this.siglaFormacao = siglaFormacao;
     }
 
     public Integer getId() {
@@ -62,6 +71,14 @@ public class ResponsavelTecnico implements Serializable {
 
     public void setSiglaFormacaoId(Integer siglaFormacaoId) {
         this.siglaFormacaoId = siglaFormacaoId;
+    }
+
+    public SiglaFormacao getSiglaFormacao() {
+        return siglaFormacao;
+    }
+
+    public void setSiglaFormacao(SiglaFormacao siglaFormacao) {
+        this.siglaFormacao = siglaFormacao;
     }
 
     @Override
