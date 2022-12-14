@@ -8,6 +8,9 @@ public class Composicao implements Serializable {
 
     private Integer id;
 
+    private Exame exame;
+    private ComposicaoExame composicaoExame;
+    private ValorReferenciaComposicaoExame valorReferenciaComposicaoExame;
     private Integer exameId;
     private Integer composicaoExameId;
     private Integer valorReferenciaComposicaoExameId;
@@ -21,6 +24,14 @@ public class Composicao implements Serializable {
         this.exameId = exameId;
         this.composicaoExameId = composicaoExameId;
         this.valorReferenciaComposicaoExameId = valorReferenciaComposicaoExameId;
+    }
+
+    public Composicao(Integer id, Exame exame, ComposicaoExame composicaoExame,
+            ValorReferenciaComposicaoExame valorReferenciaComposicaoExame) {
+        this.id = id;
+        this.exame = exame;
+        this.composicaoExame = composicaoExame;
+        this.valorReferenciaComposicaoExame = valorReferenciaComposicaoExame;
     }
 
     public Integer getId() {
@@ -55,10 +66,34 @@ public class Composicao implements Serializable {
         this.valorReferenciaComposicaoExameId = valorReferenciaComposicaoExameId;
     }
 
+    public Exame getExame() {
+        return exame;
+    }
+
+    public void setExame(Exame exame) {
+        this.exame = exame;
+    }
+
+    public ComposicaoExame getComposicaoExame() {
+        return composicaoExame;
+    }
+
+    public void setComposicaoExame(ComposicaoExame composicaoExame) {
+        this.composicaoExame = composicaoExame;
+    }
+
+    public ValorReferenciaComposicaoExame getValorReferenciaComposicaoExame() {
+        return valorReferenciaComposicaoExame;
+    }
+
+    public void setValorReferenciaComposicaoExame(ValorReferenciaComposicaoExame valorReferenciaComposicaoExame) {
+        this.valorReferenciaComposicaoExame = valorReferenciaComposicaoExame;
+    }
+
     @Override
     public String toString() {
-        return "Composicao [id=" + id + ", exameId=" + exameId + ", composicaoExameId=" + composicaoExameId
-                + ", valorReferenciaComposicaoExameId=" + valorReferenciaComposicaoExameId + "]";
+        return "Composicao [id=" + id + ", exameId=" + exame + ", composicaoExameId=" + composicaoExame
+                + ", valorReferenciaComposicaoExameId=" + valorReferenciaComposicaoExame + "]";
     }
 
     @Override

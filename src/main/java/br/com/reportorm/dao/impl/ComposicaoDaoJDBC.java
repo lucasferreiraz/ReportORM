@@ -30,9 +30,9 @@ public class ComposicaoDaoJDBC implements ComposicaoDao {
                 "INSERT INTO composicao (exame_id,composicao_exame_id,valor_referencia_composicao_exame_id) VALUES (?,?,?);",
             Statement.RETURN_GENERATED_KEYS);
 
-            st.setInt(1, obj.getExameId());
-            st.setInt(2, obj.getComposicaoExameId());
-            st.setInt(3, obj.getValorReferenciaComposicaoExameId());
+            st.setInt(1, obj.getExame().getId());
+            st.setInt(2, obj.getComposicaoExame().getId());
+            st.setInt(3, obj.getValorReferenciaComposicaoExame().getId());
 
             int rowsAffected = st.executeUpdate();
 
@@ -62,9 +62,9 @@ public class ComposicaoDaoJDBC implements ComposicaoDao {
                 "UPDATE composicao SET exame_id = ?, composicao_exame_id = ?, valor_referencia_composicao_exame_id = ? WHERE id = ?;",
             Statement.RETURN_GENERATED_KEYS);
 
-            st.setInt(1, obj.getExameId());
-            st.setInt(2, obj.getComposicaoExameId());
-            st.setInt(3, obj.getValorReferenciaComposicaoExameId());
+            st.setInt(1, obj.getExame().getId());
+            st.setInt(2, obj.getComposicaoExame().getId());
+            st.setInt(3, obj.getValorReferenciaComposicaoExame().getId());
 
             st.setInt(4, obj.getId());
 
